@@ -18,7 +18,7 @@ public class RpnCalculator {
 				stack.push(applyOperator(stack.pop(), stack.pop(), substring));
 			}
 		}
-		
+
 		if(stack.size() != 1) {
 			throw new UnbalancedEquationException();
 		}
@@ -47,7 +47,7 @@ public class RpnCalculator {
 		case "/":
 			return left / right;
 		}
-		
+
 		throw new InvalidOperatorException(operator);
 	}
 

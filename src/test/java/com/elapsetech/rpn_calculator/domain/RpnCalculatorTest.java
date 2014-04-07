@@ -11,33 +11,32 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
 
-
 @RunWith(Parameterized.class)
 public class RpnCalculatorTest {
 
 	@Parameters(name = "Test #{index} : {0} = {1}")
 	public static Collection<Object[]> createCalculator() {
 		Object[][] inputOutput = new Object[][] {
-				{ "1", 1 }, 
+				{ "1", 1 },
 				{ "1 2 +", 3 },
 				{ "14 2 5 + /", 2 },
 				{ "10 4 3 + 2 * -", -4 },
 				{ "4 2 %", new InvalidOperatorException("%") },
 				{ "4 2 2 +", new UnbalancedEquationException() }
 		};
-		
+
 		return Arrays.asList(inputOutput);
 	}
-	
+
 	private RpnCalculator calculator = new RpnCalculator();
-	
+
 	@Parameter(0)
 	public String input;
-	
+
 	@Parameter(1)
 	public Object expectedResult;
-	
-	
+
+
 	@Test
 	public void runParametrizedTests() {
 		assertEquals(expectedResult, calculateResult());
@@ -50,5 +49,5 @@ public class RpnCalculatorTest {
 			return e;
 		}
 	}
-	
+
 }

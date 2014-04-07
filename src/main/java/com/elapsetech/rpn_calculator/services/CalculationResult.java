@@ -7,7 +7,7 @@ public class CalculationResult {
 	public CalculationResult(int result) {
 		this.result = result;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		CalculationResult o = (CalculationResult) obj;
