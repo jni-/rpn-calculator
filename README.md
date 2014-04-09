@@ -23,10 +23,29 @@ Here is the [tutorial in haskell](http://learnyouahaskell.com/functionally-solvi
 Current State
 =============
 
-Currently, you can run the JBehave tests within eclipse as JUnit tests, or with maven `mvn clean integration-test`
+Pretty much everything I wanted to showcase has been implemented. Any other ideas?
+
+How to run
+==========
+
+You can start all interfaces (only REST for now) with `mvn exec:java` or by running the `Main` class in your IDE of choice.
+
+Jetty will start on port 8080. Did not see the point to make it configurable for now, submit pull request if you want it.
+
+Example query : `http://localhost:8080/rpn/result?equation=1%202%20%2B`
+
+That's `1 2 +` encoded. Plus sign needs to be encoded into %2B, else it's a space. You modern browser should convert the other spaces for you, so no need for the %20.
+
+How to run tests
+================
+
+You can run them via maven with `mvn test` to run only unit tests, or `mvn integration-test` to run JBehave tests.
+
+You can also run individual tests (including JBehave stories) with the JUnit runner in Eclipse. Not tested in other IDEs, but it should work too.
 
 Note that JBehave tests are excluded from infinitest's scope.
 
-Ultimately, the goal is to run the JBehave tests against a REST server to show how to start/stop it. Coming soon.
+More info
+=========
 
 The code is in english, but the stories are in french. Weird, I know, but that's to showcase the required config to change the langage. There is a lot more you can configure, see the doc.
