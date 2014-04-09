@@ -20,6 +20,7 @@ import org.jbehave.core.steps.InjectableStepsFactory;
 import org.jbehave.core.steps.InstanceStepsFactory;
 import org.junit.runner.RunWith;
 
+import com.elapsetech.rpn_calculator.uats.runners.JettyTestRunner;
 import com.elapsetech.rpn_calculator.uats.steps.RpnCalculatorSteps;
 
 import de.codecentric.jbehave.junit.monitoring.JUnitReportingRunner;
@@ -27,7 +28,7 @@ import de.codecentric.jbehave.junit.monitoring.JUnitReportingRunner;
 @RunWith(JUnitReportingRunner.class)
 public class RpnCalculatorStories extends JUnitStories {
 
-	private static final LocalizedKeywords keywords = new LocalizedKeywords( Locale.FRENCH);
+	private static final LocalizedKeywords keywords = new LocalizedKeywords(Locale.FRENCH);
 
 	@Override
 	public Configuration configuration() {
@@ -48,12 +49,12 @@ public class RpnCalculatorStories extends JUnitStories {
 	@Override
 	public InjectableStepsFactory stepsFactory() {
 		return new InstanceStepsFactory(configuration(),
-				new RpnCalculatorSteps());
+				new RpnCalculatorSteps(), new JettyTestRunner());
 	}
 
 	@Override
 	protected List<String> storyPaths() {
-		return new StoryFinder().findPaths( codeLocationFromClass(this.getClass()).getFile(),
+		return new StoryFinder().findPaths(codeLocationFromClass(this.getClass()).getFile(),
 				asList("**/*.story", "*.story"), null);
 	}
 

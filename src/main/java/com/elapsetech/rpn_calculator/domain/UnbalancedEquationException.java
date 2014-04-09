@@ -2,6 +2,10 @@ package com.elapsetech.rpn_calculator.domain;
 
 public class UnbalancedEquationException extends RuntimeException {
 
+	public UnbalancedEquationException() {
+		super("The equation is unbalanced, double check it.");
+	}
+
 	/**
 	 * @return Always equal to self.
 	 */

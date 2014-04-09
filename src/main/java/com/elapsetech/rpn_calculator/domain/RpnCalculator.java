@@ -11,19 +11,23 @@ public class RpnCalculator {
 	}
 
 	public Integer calculate(String input) {
-		for (String substring : input.trim().split(" ")) {
-			if (isNumber(substring)) {
-				stack.push(Integer.parseInt(substring));
-			} else {
-				stack.push(applyOperator(stack.pop(), stack.pop(), substring));
-			}
-		}
+		calculateWithinStack(input);
 
 		if(stack.size() != 1) {
 			throw new UnbalancedEquationException();
 		}
 
 		return stack.pop();
+	}
+
+	private void calculateWithinStack(String input) {
+		for (String substring : input.trim().split(" ")) {
+			if (isNumber(substring)) {
+				stack.push(Integer.parseInt(substring));
+			} else {
+				applyOperatorToLastTwoNumbers(substring);
+			}
+		}
 	}
 
 	private boolean isNumber(String substring) {
@@ -34,6 +38,13 @@ public class RpnCalculator {
 		}
 
 		return true;
+	}
+
+	private void applyOperatorToLastTwoNumbers(String operator) {
+		if(stack.size() < 2) {
+			throw new UnbalancedEquationException();
+		}
+		stack.push(applyOperator(stack.pop(), stack.pop(), operator));
 	}
 
 	private Integer applyOperator(Integer right, Integer left, String operator) {

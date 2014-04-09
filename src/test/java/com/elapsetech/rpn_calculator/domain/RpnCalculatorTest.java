@@ -1,6 +1,6 @@
 package com.elapsetech.rpn_calculator.domain;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -22,7 +22,8 @@ public class RpnCalculatorTest {
 				{ "14 2 5 + /", 2 },
 				{ "10 4 3 + 2 * -", -4 },
 				{ "4 2 %", new InvalidOperatorException("%") },
-				{ "4 2 2 +", new UnbalancedEquationException() }
+				{ "4 2 2 +", new UnbalancedEquationException() },
+				{ "4 2 + + + + +", new UnbalancedEquationException() }
 		};
 
 		return Arrays.asList(inputOutput);

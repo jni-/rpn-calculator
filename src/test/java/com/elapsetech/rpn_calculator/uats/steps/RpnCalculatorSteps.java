@@ -1,33 +1,30 @@
 package com.elapsetech.rpn_calculator.uats.steps;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static com.jayway.restassured.RestAssured.*;
+import static org.hamcrest.Matchers.*;
+
+import javax.ws.rs.core.Response.Status;
 
 import org.jbehave.core.annotations.BeforeScenario;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 
-import com.elapsetech.rpn_calculator.domain.RpnCalculator;
+import com.elapsetech.rpn_calculator.uats.runners.JettyTestRunner;
+import com.jayway.restassured.response.Response;
 
 public class RpnCalculatorSteps {
 
+	private static final String EQUATION_PARAMETER = "equation";
+
 	private static final String VALID_EQUATION = "1 2 +";
 	private static final Integer VALID_EQUATION_ANSWER = 3;
-	private static final String INVALID_EQUATION = "1 2 + + + + + + + 1";
+	private static final String INVALID_EQUATION = "1 2 + 1";
 
-	private RpnCalculator calculator;
-	private Integer lastAnswer;
-	private Throwable lastError;
-
-	public RpnCalculatorSteps() {
-		calculator = new RpnCalculator();
-	}
+	private Response response;
 
 	@BeforeScenario
 	public void clearResults() {
-		lastAnswer = null;
-		lastError = null;
+		response = null;
 	}
 
 	@When("j'écris un calcul valide")
@@ -41,22 +38,24 @@ public class RpnCalculatorSteps {
 	}
 
 	private void calculate(String equation) {
-		try {
-			lastAnswer = calculator.calculate(equation);
-		} catch(Throwable e) {
-			lastError = e;
-		}
+		response = given().
+					port(JettyTestRunner.JETTY_TEST_PORT).
+					parameters(EQUATION_PARAMETER, equation).
+				   when().
+				   	get("/rpn/result");
 	}
 
 	@Then("la calculatrice me retourne la réponse")
 	public void calculatorDisplaysTheAnswer() {
-		assertNull(lastError);
-		assertEquals(VALID_EQUATION_ANSWER, lastAnswer);
+		response.then().
+			statusCode(Status.OK.getStatusCode()).
+			body("result", equalTo(VALID_EQUATION_ANSWER));
 	}
 
 	@Then("la calculatrice me retourne une erreur")
 	public void calculatorDisplaysAndError() {
-		assertNull(lastAnswer);
-		assertNotNull(lastError);
+		response.then().
+			statusCode(Status.BAD_REQUEST.getStatusCode()).
+			body(not(isEmptyOrNullString()));
 	}
 }

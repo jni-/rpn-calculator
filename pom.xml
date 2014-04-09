@@ -25,16 +25,35 @@
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-all</artifactId>
 			<version>1.9.5</version>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.jbehave</groupId>
 			<artifactId>jbehave-core</artifactId>
 			<version>4.0-beta-5</version>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>de.codecentric</groupId>
 			<artifactId>jbehave-junit-runner</artifactId>
 			<version>1.1.0</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jersey.containers</groupId>
+			<artifactId>jersey-container-jetty-servlet</artifactId>
+			<version>2.7</version>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jersey.media</groupId>
+			<artifactId>jersey-media-json-jackson</artifactId>
+			<version>2.7</version>
+		</dependency>
+		<dependency>
+			<groupId>com.jayway.restassured</groupId>
+			<artifactId>rest-assured</artifactId>
+			<version>2.3.1</version>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 
@@ -50,25 +69,33 @@
 				</configuration>
 			</plugin>
 			<plugin>
-			<groupId>org.jbehave</groupId>
-			<artifactId>jbehave-maven-plugin</artifactId>
-			<version>4.0-beta-5</version>
-			<executions>
-				<execution>
-					<id>run-stories-as-embeddables</id>
-					<phase>integration-test</phase>
-					<configuration>
-						<includes>
-							<include>**/*Stories.java</include>
-						</includes>
-						<scope>test</scope>
-					</configuration>
-					<goals>
-						<goal>run-stories-as-embeddables</goal>
-					</goals>
-				</execution>
-			</executions>
-		</plugin>
+				<groupId>org.jbehave</groupId>
+				<artifactId>jbehave-maven-plugin</artifactId>
+				<version>4.0-beta-5</version>
+				<executions>
+					<execution>
+						<id>run-stories-as-embeddables</id>
+						<phase>integration-test</phase>
+						<configuration>
+							<includes>
+								<include>**/*Stories.java</include>
+							</includes>
+							<scope>test</scope>
+						</configuration>
+						<goals>
+							<goal>run-stories-as-embeddables</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>1.2.1</version>
+				<configuration>
+					<mainClass>com.elapsetech.rpn_calculator.interfaces.Main</mainClass>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 </project>
