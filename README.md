@@ -7,10 +7,10 @@ This sample project aims to demonstrate the following :
 * How to test a REST service (using jetty and jersey in this case)
 * How to integrate all of this with maven
 
-What is a PRN calculator?
+What is a RPN calculator?
 =========================
 
-A PRN (Polish Reverse Notation) calculator is a calculator designed to mess with your head. However, it is pretty easy to code.
+A RPN (Reverse Polish Notation) calculator is a calculator designed to mess with your head. However, it is pretty easy to code.
 
 For example, if you had `1 2 3 + 2 * -`, you would get `-9`. You simple pile numbers from left to right, and when you hit an operator you apply it to the last two numbers. 
 
