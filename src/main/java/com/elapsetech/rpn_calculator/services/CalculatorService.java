@@ -1,5 +1,7 @@
 package com.elapsetech.rpn_calculator.services;
 
+import java.util.List;
+
 import com.elapsetech.rpn_calculator.domain.RpnCalculator;
 
 public class CalculatorService {
@@ -16,6 +18,28 @@ public class CalculatorService {
 		}
 
 		return new CalculationResult(rpnCalculator.calculate(input));
+	}
+	
+	public CalculationResult sum(List<Integer> numbers) {
+		String equations = joinNumbers(numbers) + " " + createAppropriateNumberOfPlusSigns(numbers);
+		return new CalculationResult(rpnCalculator.calculate(equations));
+	}
+
+	private String joinNumbers(List<Integer> numbers) {
+		StringBuilder result = new StringBuilder();
+		for(Integer number: numbers) {
+			result.append(number.toString()).append(" ");
+		}
+		return result.toString().trim();
+	}
+	
+	private String createAppropriateNumberOfPlusSigns(List<Integer> numbers) {
+		StringBuilder result = new StringBuilder();
+		int requiredNumberOfPlusSigns = numbers.size() - 1;
+		for(int i = 0; i < requiredNumberOfPlusSigns; i++) {
+			result.append("+ ");
+		}
+		return result.toString().trim();
 	}
 
 }
